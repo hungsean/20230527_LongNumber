@@ -1,5 +1,3 @@
-import java.lang.ProcessBuilder.Redirect.Type;
-
 public class LongNumber{
 
     NumberUnit numberUnit;
@@ -16,12 +14,25 @@ public class LongNumber{
     public NumberUnit set(String number) 
     {
         int numberLength = number.length();
-        if (numberLength == 1) {
+        int sign = 1;
+        if (number.charAt(0) == '-') 
+        {
+            sign = -1;
+            if (numberLength == 2) 
+            {
+                int value = Integer.parseInt(number);
+                NumberUnit numberUnit = new NumberUnit(value, null);
+                return numberUnit;
+            }
+        }
+        if (numberLength == 1) 
+        {
             int value = Integer.parseInt(number);
             NumberUnit numberUnit = new NumberUnit(value, null);
             return numberUnit;
         }
         int value = Integer.parseInt(number.substring(numberLength - 1, numberLength));
+        value *= sign;
         String numberSub = number.substring(0, numberLength - 1);
         NumberUnit numberUnit = new NumberUnit(value, set(numberSub));
         return numberUnit;
