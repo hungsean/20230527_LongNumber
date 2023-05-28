@@ -1,7 +1,11 @@
 public class App {
     public static void main(String[] args) throws Exception {
-        LongNumber longNumber = new LongNumber();
-        NumberUnit numberUnit = longNumber.setNumberUnit("123456789012345678901234567890123456789012345678901234567890");
-        System.out.println(longNumber.getNumberUnit(numberUnit));
+        Calculator Calculator = new Calculator();
+        LongNumber longNumber = new LongNumber("123");
+        LongNumber longNumber2 = new LongNumber("4560");
+        LongNumber longNumberAdd = Calculator.addLongNumber(longNumber, longNumber2);
+        LongNumber longNumberSub = Calculator.subLongNumber(longNumber, longNumber2);
+        System.out.println(longNumberAdd.getString());
+        System.out.println(longNumberSub.getString());
     }
 }
