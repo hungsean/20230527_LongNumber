@@ -34,7 +34,7 @@ public class LongNumber{
     public NumberUnit addNumberUnit(NumberUnit numberUnit1, NumberUnit numberUnit2) 
     {
         int value = numberUnit1.value + numberUnit2.value;
-        NumberUnit numberUnit;
+        NumberUnit numberUnit, numberUnit0 = new NumberUnit(0, null);
         if (numberUnit1.next == null && numberUnit2.next == null) 
         {
             numberUnit = new NumberUnit(value, null);
@@ -42,12 +42,12 @@ public class LongNumber{
         }
         if (numberUnit1.next == null) 
         {
-            numberUnit = new NumberUnit(value, addNumberUnit(numberUnit1, numberUnit2.next));
+            numberUnit = new NumberUnit(value, addNumberUnit(numberUnit0, numberUnit2.next));
             return numberUnit;
         }
         if (numberUnit2.next == null) 
         {
-            numberUnit = new NumberUnit(value, addNumberUnit(numberUnit1.next, numberUnit2));
+            numberUnit = new NumberUnit(value, addNumberUnit(numberUnit1.next, numberUnit0));
             return numberUnit;
         }
 
@@ -57,6 +57,35 @@ public class LongNumber{
             numberUnit1.next.value += 1;
         }
         numberUnit = new NumberUnit(value, addNumberUnit(numberUnit1.next, numberUnit2.next));
+        return numberUnit;
+    }
+
+    public NumberUnit subNumberUnit(NumberUnit numberUnit1, NumberUnit numberUnit2) 
+    {
+        int value = numberUnit1.value - numberUnit2.value;
+        NumberUnit numberUnit, numberUnit0 = new NumberUnit(0, null);
+        if (numberUnit1.next == null && numberUnit2.next == null) 
+        {
+            numberUnit = new NumberUnit(value, null);
+            return numberUnit;
+        }
+        if (numberUnit1.next == null) 
+        {
+            numberUnit = new NumberUnit(value, subNumberUnit(numberUnit0, numberUnit2.next));
+            return numberUnit;
+        }
+        if (numberUnit2.next == null) 
+        {
+            numberUnit = new NumberUnit(value, subNumberUnit(numberUnit1.next, numberUnit0));
+            return numberUnit;
+        }
+
+        if(value < 0)
+        {
+            value += 10;
+            numberUnit1.next.value -= 1;
+        }
+        numberUnit = new NumberUnit(value, subNumberUnit(numberUnit1.next, numberUnit2.next));
         return numberUnit;
     }
 
