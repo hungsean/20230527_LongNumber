@@ -45,7 +45,12 @@ public class LongNumber{
             number = Integer.toString(numberUnit.value);
             return number;
         }
-        number = get(numberUnit.next) + Integer.toString(numberUnit.value);
+        int sign = 1;
+        if (numberUnit.value < 0)
+        {
+            sign = -1;
+        }
+        number = get(numberUnit.next) + Integer.toString(numberUnit.value * sign);
         return number;
     }
 

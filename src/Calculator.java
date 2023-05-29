@@ -49,14 +49,20 @@ public class Calculator
     public NumberUnit addNumberUnit(NumberUnit numberUnit1, NumberUnit numberUnit2) 
     {
         NumberUnit numberUnit = add(numberUnit1, numberUnit2);
-        numberUnit = fix(numberUnit);
+		while(!check(numberUnit))
+		{
+			numberUnit = fix(numberUnit);
+		}
         return numberUnit;
     }
 
     public NumberUnit subNumberUnit(NumberUnit numberUnit1, NumberUnit numberUnit2) 
     {
         NumberUnit numberUnit = sub(numberUnit1, numberUnit2);
-        numberUnit = fix(numberUnit);
+        while(!check(numberUnit))
+		{
+			numberUnit = fix(numberUnit);
+		}
         return numberUnit;
     }
 
@@ -74,7 +80,7 @@ public class Calculator
         return longNumber;
     }
 
-    public NumberUnit fix(NumberUnit numberUnit)
+    private NumberUnit fix(NumberUnit numberUnit)
     {
         if(numberUnit.next == null)
         {
@@ -82,12 +88,24 @@ public class Calculator
         }
         int temp = numberUnit.value + numberUnit.next.value *10;
         numberUnit.value = temp % 10;
-        if (temp < 0)
-        {
-            numberUnit.value *= -1;
-        }
         numberUnit.next.value = temp / 10;
         numberUnit.next = fix(numberUnit.next);
         return numberUnit;
     }
+
+    private boolean check(NumberUnit numberUnit)
+    {
+		boolean response = true;
+		while((numberUnit.next != null) && (response == true))
+		{
+			response = !(isPositive(numberUnit.value) ^ isPositive(numberUnit.next.value));
+			numberUnit = numberUnit.next;
+		}
+		return response;
+    }
+
+	private boolean isPositive(int i)
+	{
+		return (i >= 0);
+	}
 }
